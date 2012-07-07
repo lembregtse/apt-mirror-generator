@@ -14,7 +14,7 @@ EOF
   exit 1
 }
 
-if test "$?" -ne 0; then
+if test "$#" -eq 0; then
   usage
 fi
 
