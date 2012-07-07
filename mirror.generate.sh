@@ -9,13 +9,30 @@
 function usage() {
 cat - >&2 <<EOF
 mirror.generate.sh, create an apt-mirror config file.
-   usage: mirror.generate.sh [mirror.generate.sh config file]
+   usage: mirror.generate.sh [-o|--output file] [-h|--help] config
 EOF
   exit 1
 }
 
-if test "$#" -eq 0; then
+if test "$#" -eq 0 || test "$#" -gt 3; then
   usage
 fi
 
-FILENAME=$1 #argument 1 = filename of config
+FILENAME=""
+OUTPUTFILENAME="mirror.output"
+
+while test "$#" != 0; do
+  case "$1" in 
+    -o|--output)
+      shift
+      OUTPUTFILENAME="$1"
+      ;;
+    -h|--help)
+      usage
+      ;;
+    $1)
+      FILENAME="$1"
+      ;;
+  esac
+  shift
+done
